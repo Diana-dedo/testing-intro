@@ -18,10 +18,36 @@ describe('sortProductsByPrice', () => {
     const ist = result.map(p => p.id);
     expect(ist).toEqual([3, 4, 1]);
   });
-  test.todo("все товары c 'desc' сортируются как [1, 2, 4, 5, 6, 3]");
-  test.todo("товары [3, 1, 4] c 'desc' сортируются как [1, 4, 3]");
-  test.todo("товары [5, 2, 6] c 'desc' сортируются как [2, 5, 6]");
-  test.todo("'asc' не меняет исходный массив [1, 3, 4]");
-  test.todo("'desc' не меняет исходный массив [1, 3, 4]");
-  test.todo('направление по умолчанию не меняет исходный массив всех товаров');
+  test("все товары c 'desc' сортируются как [1, 2, 4, 5, 6, 3]", () => {
+    const result = sortProductsByPrice(products, 'desc');
+    const ist = result.map(p => p.id);
+    expect(ist).toEqual([1, 2, 4, 5, 6, 3]);
+  });
+  test("товары [3, 1, 4] c 'desc' сортируются как [1, 4, 3]", () => {
+    const inputArr = products.filter(({ id }) => [3, 1, 4].includes(id));
+    const result = sortProductsByPrice(inputArr, 'desc');
+    const ist = result.map(p => p.id);
+    expect(ist).toEqual([1, 4, 3]);
+  });
+  test("товары [5, 2, 6] c 'desc' сортируются как [2, 5, 6]", () => {
+    const inputArr = products.filter(({ id }) => [5, 2, 6].includes(id));
+    const result = sortProductsByPrice(inputArr, 'desc');
+    const ist = result.map(p => p.id);
+    expect(ist).toEqual([2, 5, 6]);
+  });
+  test("'asc' не меняет исходный массив [1, 3, 4]", () => {
+    const initialArr = products.filter(({ id }) => [1, 3, 4].includes(id));
+    sortProductsByPrice(initialArr, 'asc');
+    expect(initialArr.map(p => p.id)).toEqual([1, 3, 4]);
+  });
+  test("'desc' не меняет исходный массив [1, 3, 4]", () => {
+    const initialArr = products.filter(({ id }) => [1, 3, 4].includes(id));
+    sortProductsByPrice(initialArr, 'desc');
+    expect(initialArr.map(p => p.id)).toEqual([1, 3, 4]);
+  });
+  test('направление по умолчанию не меняет исходный массив всех товаров', () => {
+    const initialArr = Array.from(products);
+    sortProductsByPrice(initialArr);
+    expect(initialArr.map(p => p.id)).toEqual([1, 2, 3, 4, 5, 6]);
+  });
 });
